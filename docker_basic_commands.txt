@@ -1,0 +1,47 @@
+* Run an image (create + start + watch)
+docker run <img_name>
+docker run <img_name> <override_default_cmd>: This overrides the default command set for the container to execute on startup
+
+* Create a container with the image
+docker create hello-world
+
+only created the container. Basically sets up the File system of the container
+
+* Start a container with container id
+docker start -a container_id
+The start command can be used to re-run the previously stopped containers also. We cannot change the default command of previously run containers
+
+-a: watch the running container and print the output if any
+Without -a we run the container but do not see any output from it
+
+* Print docker containers (since last cleanup)
+docker ps: prints only the currently running containers
+docker ps --all: prints all the containers that were ever create
+
+* Delete old stopped containers, image cache (all the images will have to be downloaded again from the repo.)
+docker system prune
+
+* Retrieve logs from a running/stopped container
+
+docker logs <container_id>: This command does not re-run an already stopped container. It just pulls the logs from it.
+
+* Stop a running container
+
+docker stop <container_id>: sends a SIGTERM signal to the running process in the container. The process can the release resources, perform clean up and then shut down gracefully
+
+* Kill a running container
+
+docker kill <container_id>: sends a SIGKILL signal to the running process in the container and asks to shutdowm immediately without any grace period.
+docker stop command also waits for 10s for the container to stop and otherwise automatically send a SIGKILL signal forcefully shutting down the container.
+
+* Execute a command in a running container
+docker exec -it <container_id> <command>
+docker exec -it 23df353fabc redis-cli
+docker exex -it 23df353fabc sh: opens up shell which can then be used to perform any other command inside the container
+
+without -it flags the command simply starts and stops redis-cli and exits
+-it flag is important
+Linux processes have 3 communication channels: STDIN, STDOUT, STDERR. STDIN provides input to the program and STDOUT, STDERR are for the output.
+-i flag ensures that whatever user submits send it to the STDIN of redis-cli program
+-t among other things formats the input/output nicely.
+
