@@ -45,3 +45,36 @@ Linux processes have 3 communication channels: STDIN, STDOUT, STDERR. STDIN prov
 -i flag ensures that whatever user submits send it to the STDIN of redis-cli program
 -t among other things formats the input/output nicely.
 
+* Build a dockerfile / new docker image from a docker file
+docker build .
+pass the current context to the cli which then forwards it to the docker server which builds the image step by step.
+
+At every step, an temporary intermediate container is spinned up based on the last step, the current step is applied on top of it and then the temporary intermediate container is deleted. A snapshot of file system of the intermediate container is taken and an intermediate image is built.
+
+When the same docker file (with some changes) is used built again, then for all the steps before the first line change docker uses the cache and does not do any computing because of this the image building process is very fast.
+
+* Tag a docker image
+
+docker build -t <docker_id>/<project_name>:<version>
+docker build -t architraigupta/redis:latest
+
+It allows to create and start a container by using the tag (human readable) instead of an image_id.
+If you want to use the latest version of the image then no need to provide the version in the run command
+
+docker run architraigupta/redis:latest is same as docker run architraigupta/redis
+
+* Create an image from a running docker container
+
+docker commit -c 'CMD ["redis-server"]' <container_id>
+
+This allows to create an image out of a running container which can then be used to run new containers anytime.
+Basically, spin up a container, makes changes to its file system and then commit it as an image so that it can be reused.
+This is used rarely.
+
+
+
+
+
+
+
+
