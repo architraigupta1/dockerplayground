@@ -95,7 +95,21 @@ This creates a new directory if it does not exist and then changes the working d
 
 
 
+=========================================DOCKER COMPOSE========================================================
 
+- Managing multiple containers using plain vanila docker cli is cumbersome.
+- Docker compose helps us managing multiple containers via a docker-compose.yml file.
+- It gets automatically installed along with docker.
+- docker-compose has cli commands very similar to the docker cli
+- All docker-compose commands must be issued only from the directory containing docker-compose.yml file else we get error.
+- The only mandatory statement in the yml file is version: 3
+- Specify all the containers in services
+- Specify the port mapping like ports: -"4001:8081"
+- You can build containers either from images or from Dockerfile.
+- docker-compose up: start all the containers
+- docker-compose down: stop all the containers
+- docker-compose ps: status of all the containers
+- docker-compose up --build: (re)build the images and then start the docker containers
 
 
 
