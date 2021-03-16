@@ -71,6 +71,28 @@ This allows to create an image out of a running container which can then be used
 Basically, spin up a container, makes changes to its file system and then commit it as an image so that it can be reused.
 This is used rarely.
 
+* Copy files from local hard drive to the container
+
+COPY local_machine_path path_to_copy_on_container
+
+local_machine_path is relatvie to the build context (the folder where we have the Dockerfile)
+
+* Forward requests on local machine / network to the container
+
+Container has it's own set of ports and any request coming to the machine is not automatically forwarded to the container. The container port mapping has to be explicitly specified while running the container. It cannot be set in the Dockerfile. Also, the container has no issues while reaching the outside world, only for incoming requests the mapping has to be done.
+
+docker run -p <port on local machine> : <port on container> <image_id / image_name>
+docker run -p 8080:8080 architraigupta/simplewebapp
+
+* Change working directory
+
+WORKDIR /usr/app
+
+This creates a new directory if it does not exist and then changes the working directory to the specified directory for all future commands as well.
+
+
+* alpine is a conventionally famous word in Docker world to represent the most stipped down version of an image. The image will have a version alpine to indicate that it just contains bare minimum things.
+
 
 
 
