@@ -53,6 +53,11 @@ At every step, an temporary intermediate container is spinned up based on the la
 
 When the same docker file (with some changes) is used built again, then for all the steps before the first line change docker uses the cache and does not do any computing because of this the image building process is very fast.
 
+* Build a container from a custom docker file
+
+docker build -f <filename> .
+docker build -f archit.dev .
+
 * Tag a docker image
 
 docker build -t <docker_id>/<project_name>:<version>
@@ -94,6 +99,13 @@ This creates a new directory if it does not exist and then changes the working d
 * alpine is a conventionally famous word in Docker world to represent the most stipped down version of an image. The image will have a version alpine to indicate that it just contains bare minimum things.
 
 
+* Share local volume/directory with container
+docker run -v local_directory:container_dir <image_id>
+docker run -v $(pwd):/app arcgupta/demoapp
+
+If we want to make sure that sharing the local directory does not override any directory on the container then we can bookmark it.
+docker run -v container_dir <image_id>
+docker run -v /app/node_modules arcgupta/demoapp
 
 =========================================DOCKER COMPOSE========================================================
 
