@@ -1,9 +1,17 @@
-FROM ubuntu
+FROM node:alpine
 
-RUN apt-get update
-RUN apt-get install -y python python-pip
-RUN pip install flask
+WORKDIR /app
 
-COPY app.py /opt/app.py
+COPY demoapp/package.json ./
 
-ENTRYPOINT FLASK_APP=/opt/app.py flask run --host=0.0.0.0
+RUN npm install
+
+COPY demoapp ./
+
+RUN npm run build
+
+FROM nginx
+
+EXPOSE 80
+
+COPY --from=0 /app/build /usr/share/nginx/html
