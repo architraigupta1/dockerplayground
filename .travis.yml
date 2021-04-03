@@ -7,3 +7,15 @@ before_install:
 
 script:
   - docker run -e CI=true architraigupta/travis-demoapp npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-demoapp"
+  env: "Dockerdemoapp-env"
+  bucket_name: "elasticbeanstalk-us-east-2-947548241628"
+  bucket_path: "docker-demoapp"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
