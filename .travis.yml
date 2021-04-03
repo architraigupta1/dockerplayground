@@ -6,4 +6,4 @@ before_install:
   - docker build -t architraigupta/travis-demoapp -f demoapp/Dockerfile.dev demoapp
 
 script:
-  - docker run architraigupta/travis-demoapp npm run test -- --coverage
+  - docker run -e CI=true architraigupta/travis-demoapp npm run test -- --coverage
